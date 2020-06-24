@@ -8,5 +8,5 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme" />
-//wer das ließt ist doof
+
 </manifest>
