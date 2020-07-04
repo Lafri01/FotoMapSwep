@@ -14,14 +14,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <meta-data android:name="com.google.geo.API_KEY"
-            android:value="@string/map_key"/>
 
-<activity android:name=".MapActivity">
-
-</activity>
-
-        <activity android:name=".Bildinfo">
+        <activity android:name=".CreateImageActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>

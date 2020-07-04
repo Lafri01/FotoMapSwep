@@ -28,6 +28,7 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageMetadata;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
@@ -48,7 +49,7 @@ public class CreateImageActivity extends AppCompatActivity {
     private EditText Season;
     private EditText TimeOfTheDay;
 
-    private Uri imageUri;
+    private static Uri imageUri;
 
     private static final  int IMAGE_REQUEST = 2;
 
@@ -57,6 +58,14 @@ public class CreateImageActivity extends AppCompatActivity {
 
     //Bitmap to get image from gallery
     private Bitmap bitmap;
+
+    private static String fileRefString;
+    private static StorageReference fileRef;
+
+    private static String descriptioncontent;
+    private static String locationStylecontent;
+    private static String seasoncontent;
+    private static String timeOfTheDaycontent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,7 +79,6 @@ public class CreateImageActivity extends AppCompatActivity {
         ChooseImageButton = (Button) findViewById(R.id.ChooseImageButton);
         ShareButton = (Button) findViewById(R.id.ShareButton);
         imageView = (ImageView) findViewById(R.id.imageView);
-        Keywords = (EditText) findViewById(R.id.Keywords);
         Description = (EditText) findViewById(R.id.Description);
         LocationStyle = (EditText) findViewById(R.id.LocationStyle);
         Season = (EditText) findViewById(R.id.Season);
@@ -82,6 +90,7 @@ public class CreateImageActivity extends AppCompatActivity {
                 showFileChooser();
             }
         });
+
         ShareButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -103,7 +112,7 @@ public class CreateImageActivity extends AppCompatActivity {
 
         if (requestCode == IMAGE_REQUEST && resultCode == RESULT_OK) {
             assert data != null;
-            imageUri = data.getData();
+            CreateImageActivity.imageUri = data.getData();
 
             //TODO: Hier GPS des Bildes auslesen und speichern
 
@@ -111,8 +120,6 @@ public class CreateImageActivity extends AppCompatActivity {
                 bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), imageUri);
                 imageView.setImageBitmap(bitmap);
                 Log.d("Image Uri lautet", String.valueOf(imageUri)); //Funktioniert
-                //TODO: Hier die zusätzlichen Dinge des ImagePosts (description etc) als Metadaten des Bildes setzen und handling des Pfades anpassen.
-
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -129,12 +136,21 @@ public class CreateImageActivity extends AppCompatActivity {
 
     private void uploadImage() {
 
-        if (imageUri != null) {
+        CreateImageActivity.descriptioncontent = Description.getText().toString().trim();
+        CreateImageActivity.locationStylecontent = LocationStyle.getText().toString().trim();
+        CreateImageActivity.seasoncontent = Season.getText().toString().trim();
+        CreateImageActivity.timeOfTheDaycontent = TimeOfTheDay.getText().toString().trim();
+
+        if (CreateImageActivity.imageUri != null && CreateImageActivity.descriptioncontent != null &&
+                CreateImageActivity.locationStylecontent != null && CreateImageActivity.seasoncontent != null &&
+                CreateImageActivity.timeOfTheDaycontent != null) {
             FirebaseStorage storage = FirebaseStorage.getInstance();
             final StorageReference storageRef = storage.getReference().child("uploads")
                     .child(System.currentTimeMillis() + "." + getFileExtension(imageUri));
-
-            Log.d("REFERENCE IST: ", String.valueOf(storageRef)); //Funktioniert
+            CreateImageActivity.fileRefString = String.valueOf(storageRef);
+            CreateImageActivity.fileRef = storageRef;
+           // Log.d("REFERENCE IST: ", String.valueOf(storageRef)); //Funktioniert
+            //Log.d("Referenzvariable ist", String.valueOf(CreateImageActivity.fileRefString));
 
             storageRef.putFile(imageUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
                 @Override
@@ -144,14 +160,45 @@ public class CreateImageActivity extends AppCompatActivity {
                         public void onSuccess(Uri uri) {
                             String url = uri.toString();
 
-                            Log.d("DownloadUrl", url);
+                            //Log.d("DownloadUrl", url);
                             Toast.makeText(CreateImageActivity.this, "Image upload successfull", Toast.LENGTH_SHORT).show();
                             //Funktioniert!
+
+                            uploadMetadata();
+
                         }
+
                     });
                 }
+
             });
+        }else{
+            Toast.makeText(CreateImageActivity.this,"Please fill in all Parameters", Toast.LENGTH_LONG).show();
         }
+    }
+
+    private void uploadMetadata(){
+
+        //FirebaseStorage storage = FirebaseStorage.getInstance();
+            //Log.d("FileRef in uploadMetadata", String.valueOf(CreateImageActivity.fileRef));
+            //StorageReference storageRef = CreateImageActivity.fileRef;
+         //   Log.d("storageRef2 in uploadMetadata", String.valueOf(CreateImageActivity.fileRef));
+
+            StorageMetadata metadata = new StorageMetadata.Builder()
+                    .setCustomMetadata("Description", descriptioncontent)
+                    .setCustomMetadata("Locationstyle", locationStylecontent)
+                    .setCustomMetadata("Season", seasoncontent)
+                    .setCustomMetadata("Time of the day", timeOfTheDaycontent)
+                    .build();
+
+            CreateImageActivity.fileRef.updateMetadata(metadata)
+                    .addOnSuccessListener(new OnSuccessListener<StorageMetadata>() {
+                        @Override
+                        public void onSuccess(StorageMetadata storageMetadata) {
+                            Log.d("METADATA IS WRITTEN", descriptioncontent + locationStylecontent);
+                        }
+                    });
+
     }
 
     private void requestStoragePermission() {
@@ -185,5 +232,3 @@ public class CreateImageActivity extends AppCompatActivity {
         }
     }
  }
-
-
