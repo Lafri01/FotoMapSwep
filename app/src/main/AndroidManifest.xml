@@ -25,7 +25,8 @@
         <activity android:name=".MapActivity" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".CreateImageActivity" />
-        <activity android:name=".ImageViewActivity"/>
+        <activity android:name=".SettingActivity"/>
+        <activity android:name=".ImageViewActivity" />
         <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -168,8 +168,8 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
                             startActivity(intent2);
                             break;
                         case R.id.nav_Settings:
-                        /*    Intent intent3 = new Intent(MapActivity.this, SettingsActivity.class);
-                            startActivity(intent3);*/
+                           Intent intent3 = new Intent(MapActivity.this, SettingActivity.class);
+                            startActivity(intent3);
                             break;
                     }
                     return false;
