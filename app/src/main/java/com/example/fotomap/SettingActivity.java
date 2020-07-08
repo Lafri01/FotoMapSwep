@@ -8,6 +8,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
@@ -15,6 +17,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 public class SettingActivity extends AppCompatActivity {
     FirebaseAuth fAuth;
+    static int mapkoks = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,13 +25,15 @@ public class SettingActivity extends AppCompatActivity {
         setContentView(R.layout.activity_setting);
         fAuth = FirebaseAuth.getInstance();
 
-
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
         Menu menu = bottomNav.getMenu();
         MenuItem menuItem = menu.getItem(2);
         menuItem.setChecked(true);
+
+
     }
+
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =
             new BottomNavigationView.OnNavigationItemSelectedListener() {
                 @Override
@@ -52,9 +57,19 @@ public class SettingActivity extends AppCompatActivity {
                 }
 
             };
+
+
+
     public void logout(View view) {
         FirebaseAuth.getInstance().signOut();//logout
         startActivity(new Intent(getApplicationContext(),LoginActivity.class));
         finish();
     }
+
+    public void switchSchema (View view){
+        Toast.makeText(this, "Mapstyle switched!", Toast.LENGTH_SHORT).show();
+        mapkoks++;
+    }
+
+
 }
