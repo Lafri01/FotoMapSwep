@@ -18,6 +18,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -28,6 +29,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import android.Manifest;
@@ -49,11 +51,15 @@ import android.widget.Toast;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import androidx.annotation.NonNull;
 
@@ -68,7 +74,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
     Button resendCode;
-    private GoogleMap mMap;
+
     String userId;
 
 
@@ -122,32 +128,31 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
                 }
             });
         }
-    }
-
-        
-        
-        
-        
-
- for( int i = 0 ; i < .length ; i++){
-
-            for(int j = 0; j < .length; j++) {
-                MarkerarrayList.add(new MarkerOptions().position(new LatLng(fileLat, fileLng)).title(fileTitle);
-
-
-            }
-    }
 
 
 
 
-        BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
+
+
+
+    // for( int i = 0 ; i < .length ; i++){
+//
+//            for(int j = 0; j < .length; j++) {
+//                MarkerarrayList.add(new MarkerOptions().position(new LatLng(fileLat, fileLng)).title(fileTitle);
+//
+//
+//            }
+//    }
+
+
+
+
+    BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
-        Menu menu = bottomNav.getMenu();
-        MenuItem menuItem = menu.getItem(0);
+    Menu menu = bottomNav.getMenu();
+    MenuItem menuItem = menu.getItem(0);
         menuItem.setChecked(true);
-    }
-
+}
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =
             new BottomNavigationView.OnNavigationItemSelectedListener() {
                 @Override
@@ -158,12 +163,10 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 
                             break;
                         case R.id.nav_newPost:
-                            Intent intent2 = new Intent(MapActivity.this, CreateImageActivity.class);
-                            startActivity(intent2);
+
                             break;
                         case R.id.nav_Settings:
-                            Intent intent3 = new Intent(MapActivity.this, Bildinfo.class);
-                            startActivity(intent3);
+
                             break;
                     }
                     return false;
