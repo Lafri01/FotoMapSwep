@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "857617093041",
+    "firebase_url": "https://fotomap-4df10.firebaseio.com",
+    "project_id": "fotomap-4df10",
+    "storage_bucket": "fotomap-4df10.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:857617093041:android:9dc262150f48bca5046d90",
+        "android_client_info": {
+          "package_name": "com.example.fotomap"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "857617093041-vof87msf498n3bssffa3p2ssvn58pco5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.fotomap",
+            "certificate_hash": "0af712e105d1a534bf989b772f25af3b4d3f5f5e"
+          }
+        },
+        {
+          "client_id": "857617093041-olvono5v75hivq2j6p3319ht11lv3gmr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyATze4g8hiJ5-7kofdZJbbEOBqG2Y1ocMA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "857617093041-olvono5v75hivq2j6p3319ht11lv3gmr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
