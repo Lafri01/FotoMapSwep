@@ -41,6 +41,22 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
     private static final String TAG = "1337";
     private GoogleMap mMap;
 
+
+
+    // ArrayList für die Marker
+
+    ArrayList<LatLng> MarkerarrayList = new ArrayList<LatLng>();
+    ArrayList<LatLng> MarkerOptions = new ArrayList<LatLng>();
+    // Anlegen der Markerobjekte enthält double Latitude longitude
+
+
+
+    LatLng sydney = new LatLng (50.57922810 , 8.66658747);
+
+    //arraylist für die namen der marker
+    ArrayList<String > title = new ArrayList<String>();
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +65,19 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+
+ for( int i = 0 ; i < .length ; i++){
+
+            for(int j = 0; j < .length; j++) {
+                MarkerarrayList.add(new MarkerOptions().position(new LatLng(fileLat, fileLng)).title(fileTitle);
+
+
+            }
+    }
+
+
+
 
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
@@ -92,6 +121,32 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+
+ //
+        for ( int i = 0 ; i < MarkerarrayList.size(); i++){                                                                 // Schleife zum hinzufügen der marker
+
+
+            for ( int j = 0 ; j < title.size(); j++){                                                                           // Schleife zum setzen der Namen
+
+                mMap.addMarker(new MarkerOptions().position(MarkerarrayList.get(i)).title(String.valueOf(title.get(j))));                                              //position nimmt ein LatLng Objekt an, title String , get() ist von Arraylist dem wird ein index (int) übergeben
+            }
+            mMap.moveCamera(CameraUpdateFactory.newLatLng(MarkerarrayList.get(i)));                                                                                  // bewegt kamera zu diesem objekt mit moveCamera , newLatLng bewegt den screen so dass der punkt im center ist
+
+        }
+        // Onclicklistener für die Marker auf der karte
+        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+                String markertitle = marker.getTitle();
+                Intent i = new Intent(MapActivity.this, Detailsactivity.class);
+                i.putExtra("title", markertitle);
+                startActivity(i);
+
+                return false;
+            }
+        });
+
+
         try {
             // Customise the styling of the base map using a JSON object defined
             // in a raw resource file.
