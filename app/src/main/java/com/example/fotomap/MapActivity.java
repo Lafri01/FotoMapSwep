@@ -160,13 +160,16 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
                 public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                     switch (item.getItemId()) {
                         case R.id.nav_home:
-
+ /*    Intent intent1 = new Intent(MapActivity.this, MapActivity.class);
+                            startActivity(intent1);*/
                             break;
                         case R.id.nav_newPost:
-
+                            Intent intent2 = new Intent(MapActivity.this, CreateImageActivity.class);
+                            startActivity(intent2);
                             break;
                         case R.id.nav_Settings:
-
+                        /*    Intent intent3 = new Intent(MapActivity.this, SettingsActivity.class);
+                            startActivity(intent3);*/
                             break;
                     }
                     return false;
