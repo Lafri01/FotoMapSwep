@@ -57,6 +57,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -69,6 +71,9 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 
     private static final String TAG = "1337";
     private GoogleMap mMap;
+
+    boolean locationPermissionGranted;
+    private FusedLocationProviderClient mFusedLocationClient;
     
   TextView verifyMsg;
     FirebaseAuth fAuth;
@@ -105,6 +110,8 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         verifyMsg = findViewById(R.id.verifyMsg);
         fAuth = FirebaseAuth.getInstance();
         final FirebaseUser user= fAuth.getCurrentUser();
+
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
 
         if(!user.isEmailVerified()){
             verifyMsg.setVisibility(View.VISIBLE);
@@ -239,6 +246,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
             //                                          int[] grantResults)
             // to handle the case where the user grants the permission. See the documentation
             // for ActivityCompat#requestPermissions for more details.
+            requestLocationPermission();
             return;
         }
 
@@ -272,6 +280,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
             //If permission is granted
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 //Displaying a toast
+                locationPermissionGranted = true;
                 Toast.makeText(this, "Permission granted now you can check your location", Toast.LENGTH_LONG).show();
             } else {
                 //Displaying another toast if permission is not granted
@@ -282,11 +291,37 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 
     @Override
     public boolean onMyLocationButtonClick() {
+        getLastKnownLocation();
         return false;
     }
 
     @Override
     public void onMyLocationClick(@NonNull Location location) {
+
+    }
+
+    private void getLastKnownLocation() {
+        Log.d(TAG, "getLastKnownLocation: called.");
+
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            return;
+        }
+        mFusedLocationClient.getLastLocation().addOnCompleteListener(new OnCompleteListener<android.location.Location>() {
+            @Override
+            public void onComplete(@NonNull Task<android.location.Location> task) {
+                if (task.isSuccessful()) {
+                    Location location = task.getResult();
+                    if (location != null){
+                        findPicture.loclat = location.getLatitude();
+                        findPicture.loclon = location.getLongitude();
+                        Log.d ("userlat: ", String.valueOf(findPicture.loclat));
+                        Log.d("Userlon: ", String.valueOf(findPicture.loclon));
+                    }
+
+                }
+            }
+        });
+        findPicture.findpics();
 
     }
 }
