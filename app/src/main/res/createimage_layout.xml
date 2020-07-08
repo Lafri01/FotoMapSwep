@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:scrollbarAlwaysDrawHorizontalTrack="false"
+    android:scrollbarAlwaysDrawVerticalTrack="false"
+    android:scrollbarTrackVertical="@color/material_on_background_disabled">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbarAlwaysDrawHorizontalTrack="false"
+        android:scrollbarAlwaysDrawVerticalTrack="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/ChooseImageButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Choose Image" />
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="match_parent"
+                android:layout_height="339dp"
+                android:contentDescription="UploadImage"
+                tools:srcCompat="@tools:sample/avatars" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <EditText
+                    android:id="@+id/Description"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:autofillHints="Description"
+                    android:ems="10"
+                    android:gravity="start|top"
+                    android:hint="Description"
+                    android:inputType="textMultiLine" />
+
+                <EditText
+                    android:id="@+id/LocationStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:autofillHints="Location"
+                    android:ems="10"
+                    android:hint="Location Style"
+                    android:inputType="textMultiLine" />
+
+                <EditText
+                    android:id="@+id/Season"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:autofillHints="Season"
+                    android:ems="10"
+                    android:hint="Season"
+                    android:inputType="textMultiLine" />
+
+                <EditText
+                    android:id="@+id/TimeOfTheDay"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="Time of the day"
+                    android:inputType="textMultiLine"
+                    android:autofillHints="Time of the day" />
+
+                <Button
+                    android:id="@+id/ShareButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:text="Share" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>
