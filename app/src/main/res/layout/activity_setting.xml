@@ -44,7 +44,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:layout_marginHorizontal="20dp"
             app:layout_constraintTop_toBottomOf="@id/SettingsTitle"
             android:text="We are currently focussing only on the city of Giessen and its surroundings. Any posts outside of this region will not be displayed. Whenever you press the GPS Button on the map, all available results will be displayed. Uploaded Images need GeoTags to be displayed"/>
