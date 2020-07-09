@@ -339,4 +339,9 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
       //  findPicture.findpics();
 
     }
+    
+    public void moveToGiessen(View view){
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(Giessen, 13));
+
+    }
 }
