@@ -17,7 +17,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 public class SettingActivity extends AppCompatActivity {
     FirebaseAuth fAuth;
-    static int mapkoks = 0;
+    static int mapstyle = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,7 +68,7 @@ public class SettingActivity extends AppCompatActivity {
 
     public void switchSchema (View view){
         Toast.makeText(this, "Mapstyle switched!", Toast.LENGTH_SHORT).show();
-        mapkoks++;
+        mapstyle++;
     }
 
 
