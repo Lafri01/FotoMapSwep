@@ -52,7 +52,8 @@ public class CreateImageActivity extends AppCompatActivity {
     private EditText LocationStyle;
     private EditText Season;
     private EditText TimeOfTheDay;
-
+    ProgressBar progressBar;
+    
     private static Uri imageUri;
 
     private static final int IMAGE_REQUEST = 2;
@@ -92,7 +93,8 @@ public class CreateImageActivity extends AppCompatActivity {
         LocationStyle = (EditText) findViewById(R.id.LocationStyle);
         Season = (EditText) findViewById(R.id.Season);
         TimeOfTheDay = (EditText) findViewById(R.id.TimeOfTheDay);
-
+        progressBar = findViewById(R.id.progressBar);
+        
         ChooseImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -146,7 +148,7 @@ public class CreateImageActivity extends AppCompatActivity {
     }
 
     private void uploadImage() {
-
+        progressBar.setVisibility(View.VISIBLE);
         setFields();
 
         if ((CreateImageActivity.imageUri != null) && (CreateImageActivity.descriptioncontent != null) &&
@@ -192,6 +194,7 @@ public class CreateImageActivity extends AppCompatActivity {
             });
         } else {
             Toast.makeText(CreateImageActivity.this, "Please fill in all Parameters", Toast.LENGTH_LONG).show();
+            progressBar.setVisibility(View.GONE);
         }
     }
 
