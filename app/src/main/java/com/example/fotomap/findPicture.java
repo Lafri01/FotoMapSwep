@@ -16,6 +16,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 
 class findPicture {
+
     static double loclat;
     static double loclon;
     static DatabaseReference ref = FirebaseDatabase.getInstance().getReference("uploads");
@@ -27,6 +28,7 @@ class findPicture {
     static ArrayList<Double> searchResultsLat = new ArrayList<Double>();
     static ArrayList<Double> searchResultsLon = new ArrayList<Double>();
 
+
     public static void findpics() {
 
         geoQuery.addGeoQueryEventListener(new GeoQueryEventListener() {
@@ -35,7 +37,13 @@ class findPicture {
             @Override
             public void onKeyEntered(String key, GeoLocation location) {
                 searchResultsID.add(key); //funktioniert
-                searchResultsLocation.add( String.valueOf(location));
+                String location2 = String.valueOf(location);
+                searchResultsLocation.add(location2);
+
+                searchResultsLat.add (Double.parseDouble(location2.substring(12,28)));
+                searchResultsLon.add (Double.parseDouble(location2.substring(31,40)));
+
+
             }
 
             @Override
@@ -54,13 +62,6 @@ class findPicture {
                 Log.d ("LocationList", String.valueOf(searchResultsLocation));
 
                 if (searchResultsID != null){
-                    for (String s : searchResultsLocation){
-                        String[] parts = s.split(", ");
-                        String lat = parts[0].substring (12,28) ;
-                        searchResultsLat.add(Double.parseDouble(lat));
-                        String lon = parts[1].substring (0,10);
-                        searchResultsLon.add(Double.parseDouble(lon));
-                    }
                     Log.d("LatList: ", String.valueOf(searchResultsLat));//funktioniert
                     Log.d ("LongList", String.valueOf(searchResultsLon));//funktioniert
 
@@ -68,7 +69,7 @@ class findPicture {
                         for (int i = 0; i < (findPicture.searchResultsID.size()); i++) {
                             double lat = findPicture.searchResultsLat.get(i);
                             double lon = findPicture.searchResultsLon.get(i);
-                            String id = findPicture.searchResultsID.get(i);
+                            //String id = findPicture.searchResultsID.get(i);
 
                             LatLng name = new LatLng(lat, lon);
                             String n = String.valueOf(i + 1);
@@ -85,6 +86,12 @@ class findPicture {
             public void onGeoQueryError(DatabaseError error) {
             }
         });
+    }
+    public static void reset(){
+         searchResultsID = null;
+         searchResultsLocation = null;
+         searchResultsLat = null;
+          searchResultsLon = null;
     }
 }
 

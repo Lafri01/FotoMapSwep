@@ -76,13 +76,13 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
    static ArrayList<LatLng> MarkerarrayList = new ArrayList<LatLng>();
    static ArrayList<LatLng> MarkerOptions = new ArrayList<LatLng>();
    static ArrayList<String > title = new ArrayList<>();
-   private static final LatLng Giessen = new LatLng(50.583298, 8.676937);
 
 
     private GoogleMap mMap;
 
     boolean locationPermissionGranted;
     private FusedLocationProviderClient mFusedLocationClient;
+    private static final LatLng Giessen = new LatLng(50.583298, 8.676937);
 
     findPicture find = new findPicture();
 
@@ -205,23 +205,39 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        find.findpics();
 
         Log.d("TITLEARRAY1 IST: ", String.valueOf(findPicture.searchResultsID));
         // Onclicklistener für die Marker auf der karte
+
+         int markercount = findPicture.searchResultsID.size();
+        Log.d ("MARKTERCOUNT IST", String.valueOf(markercount));
+
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
-
-
             public boolean onMarkerClick(Marker marker) {
-                String markertitle = marker.getTitle();
-                Intent i = new Intent(MapActivity.this, ImageViewActivity.class);
-                i.putExtra("title", markertitle);
-                startActivity(i);
+                for(int i=0;i<MarkerarrayList.size();i++) {
+                    if (marker.getTitle().equals("Marker in Position" + i)){
+                        ImageViewActivity.kind = String.valueOf(findPicture.searchResultsID.get(i));
 
-                return false;
+                        String markertitle = marker.getTitle();
+                Intent in = new Intent(MapActivity.this, ImageViewActivity.class);
+                in.putExtra("title", markertitle);
+                startActivity(in);
+                    }
+                }return false;
             }
         });
+//        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+//            @Override
+//            public boolean onMarkerClick(Marker marker) {
+//                String markertitle = marker.getTitle();
+//                Intent i = new Intent(MapActivity.this, ImageViewActivity.class);
+//                i.putExtra("title", markertitle);
+//                startActivity(i);
+//
+//                return false;
+//            }
+//        });
 
         if (mapstyle%2==0) {
             try {
@@ -293,18 +309,25 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 
     @Override
     public boolean onMyLocationButtonClick() {
+        find.findpics();
         getLastKnownLocation();
         Log.d("TITLEARRAY2 IST: ", String.valueOf(findPicture.searchResultsID));
-        for ( int i = 0 ; i < MarkerarrayList.size(); i++){                                                                 // Schleife zum hinzufügen der marker
 
-            for ( int j = 0 ; j < findPicture.searchResultsID.size(); j++){                                                                           // Schleife zum setzen der Namen
 
-                mMap.addMarker(new MarkerOptions().position(MarkerarrayList.get(i)).title(String.valueOf(findPicture.searchResultsID.get(i))));                                              //position nimmt ein LatLng Objekt an, title String , get() ist von Arraylist dem wird ein index (int) übergeben
-            }
-
-                                                                                              // bewegt kamera zu diesem objekt mit moveCamera , newLatLng bewegt den screen so dass der punkt im center ist
+        for(int i=0;i<MarkerarrayList.size();i++) {
+            mMap.addMarker(new MarkerOptions().position(MarkerarrayList.get(i)).title("Marker in Position"+i));
+           // mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Position"+i));
 
         }
+
+//        for ( int i = 0 ; i < MarkerarrayList.size(); i++){                                                                 // Schleife zum hinzufügen der marker
+//
+//            for ( int j = 0 ; j < findPicture.searchResultsID.size(); j++){                                                                           // Schleife zum setzen der Namen
+//
+//                mMap.addMarker(new MarkerOptions().position(MarkerarrayList.get(i)).title(String.valueOf(findPicture.searchResultsID.get(i))));                                              //position nimmt ein LatLng Objekt an, title String , get() ist von Arraylist dem wird ein index (int) übergeben
+//            }
+//                                                                                              // bewegt kamera zu diesem objekt mit moveCamera , newLatLng bewegt den screen so dass der punkt im center ist
+//        }
         //mMap.moveCamera(CameraUpdateFactory.newLatLng(MarkerarrayList.get(0)));
 
 
