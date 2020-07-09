@@ -9,6 +9,7 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
+import android.database.MatrixCursor;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -66,17 +67,24 @@ import java.util.List;
 import androidx.annotation.NonNull;
 
 import static com.example.fotomap.Constants.PERMISSION_REQUEST_ACCESS_FINE_LOCATION;
-import static com.example.fotomap.SettingActivity.mapkoks;
 import static com.example.fotomap.SettingActivity.mapstyle;
 
 public class MapActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMyLocationButtonClickListener, GoogleMap.OnMyLocationClickListener {
 
     private static final String TAG = "1337";
+
+   static ArrayList<LatLng> MarkerarrayList = new ArrayList<LatLng>();
+   static ArrayList<LatLng> MarkerOptions = new ArrayList<LatLng>();
+   static ArrayList<String > title = new ArrayList<>();
+
+
     private GoogleMap mMap;
 
     boolean locationPermissionGranted;
     private FusedLocationProviderClient mFusedLocationClient;
-    
+
+    findPicture find = new findPicture();
+
   TextView verifyMsg;
     FirebaseAuth fAuth;
     FirebaseFirestore fStore;
@@ -87,8 +95,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 
     // ArrayList für die Marker
 
-    ArrayList<LatLng> MarkerarrayList = new ArrayList<LatLng>();
-    ArrayList<LatLng> MarkerOptions = new ArrayList<LatLng>();
+
     // Anlegen der Markerobjekte enthält double Latitude longitude
 
 
@@ -96,7 +103,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
     LatLng sydney = new LatLng (50.57922810 , 8.66658747);
 
     //arraylist für die namen der marker
-    ArrayList<String > title = new ArrayList<String>();
 
 
     @Override
@@ -198,24 +204,17 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        find.findpics();
 
- //
-        for ( int i = 0 ; i < MarkerarrayList.size(); i++){                                                                 // Schleife zum hinzufügen der marker
-
-
-            for ( int j = 0 ; j < title.size(); j++){                                                                           // Schleife zum setzen der Namen
-
-                mMap.addMarker(new MarkerOptions().position(MarkerarrayList.get(i)).title(String.valueOf(title.get(j))));                                              //position nimmt ein LatLng Objekt an, title String , get() ist von Arraylist dem wird ein index (int) übergeben
-            }
-            mMap.moveCamera(CameraUpdateFactory.newLatLng(MarkerarrayList.get(i)));                                                                                  // bewegt kamera zu diesem objekt mit moveCamera , newLatLng bewegt den screen so dass der punkt im center ist
-
-        }
+        Log.d("TITLEARRAY1 IST: ", String.valueOf(findPicture.searchResultsID));
         // Onclicklistener für die Marker auf der karte
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
+
+
             public boolean onMarkerClick(Marker marker) {
                 String markertitle = marker.getTitle();
-                Intent i = new Intent(MapActivity.this, Detailsactivity.class);
+                Intent i = new Intent(MapActivity.this, ImageViewActivity.class);
                 i.putExtra("title", markertitle);
                 startActivity(i);
 
@@ -294,6 +293,20 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
     @Override
     public boolean onMyLocationButtonClick() {
         getLastKnownLocation();
+        Log.d("TITLEARRAY2 IST: ", String.valueOf(findPicture.searchResultsID));
+        for ( int i = 0 ; i < MarkerarrayList.size(); i++){                                                                 // Schleife zum hinzufügen der marker
+
+            for ( int j = 0 ; j < findPicture.searchResultsID.size(); j++){                                                                           // Schleife zum setzen der Namen
+
+                mMap.addMarker(new MarkerOptions().position(MarkerarrayList.get(i)).title(String.valueOf(findPicture.searchResultsID.get(i))));                                              //position nimmt ein LatLng Objekt an, title String , get() ist von Arraylist dem wird ein index (int) übergeben
+            }
+
+                                                                                              // bewegt kamera zu diesem objekt mit moveCamera , newLatLng bewegt den screen so dass der punkt im center ist
+
+        }
+        //mMap.moveCamera(CameraUpdateFactory.newLatLng(MarkerarrayList.get(0)));
+
+
         return false;
     }
 
@@ -323,7 +336,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
                 }
             }
         });
-        findPicture.findpics();
+      //  findPicture.findpics();
 
     }
 }

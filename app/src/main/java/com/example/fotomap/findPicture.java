@@ -8,6 +8,7 @@ import com.firebase.geofire.GeoFire;
 import com.firebase.geofire.GeoLocation;
 import com.firebase.geofire.GeoQuery;
 import com.firebase.geofire.GeoQueryEventListener;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -19,7 +20,7 @@ class findPicture {
     static double loclon;
     static DatabaseReference ref = FirebaseDatabase.getInstance().getReference("uploads");
     final static GeoFire geoFire = new GeoFire(ref);
-    final static GeoQuery geoQuery = geoFire.queryAtLocation(new GeoLocation(50.579229, 8.666584), 3);
+    final static GeoQuery geoQuery = geoFire.queryAtLocation(new GeoLocation(50.5841, 8.6784), 5);
 
     static ArrayList<String> searchResultsID = new ArrayList<String>();
     static ArrayList<String> searchResultsLocation = new ArrayList<String>();
@@ -59,8 +60,22 @@ class findPicture {
                         searchResultsLat.add(Double.parseDouble(lat));
                         String lon = parts[1].substring (0,10);
                         searchResultsLon.add(Double.parseDouble(lon));
-                        Log.d("LatList: ", String.valueOf(searchResultsLat));//funktioniert
-                        Log.d ("LongList", String.valueOf(searchResultsLon));//funktioniert
+                    }
+                    Log.d("LatList: ", String.valueOf(searchResultsLat));//funktioniert
+                    Log.d ("LongList", String.valueOf(searchResultsLon));//funktioniert
+
+                    if (findPicture.searchResultsID != null) {
+                        for (int i = 0; i < (findPicture.searchResultsID.size()); i++) {
+                            double lat = findPicture.searchResultsLat.get(i);
+                            double lon = findPicture.searchResultsLon.get(i);
+                            String id = findPicture.searchResultsID.get(i);
+
+                            LatLng name = new LatLng(lat, lon);
+                            String n = String.valueOf(i + 1);
+                           MapActivity.MarkerarrayList.add(name);
+                            MapActivity.title.add(n);
+                            //MarkerarrayList.add(new MarkerOptions().position(new LatLng(fileLat, fileLng)).title(fileTitle));
+                        }
                     }
 
                 }

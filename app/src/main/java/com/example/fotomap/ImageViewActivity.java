@@ -29,8 +29,8 @@ private TextView Season;
 private TextView TimeOfTheDay;
 private FirebaseDatabase firebaseDatabase=FirebaseDatabase.getInstance();
 private DatabaseReference reference=firebaseDatabase.getReference();
-    private DatabaseReference childreference=reference.child("uploads").child("1594144775211");
-
+private DatabaseReference childreference=reference.child("uploads");
+//int i = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,29 +46,40 @@ private DatabaseReference reference=firebaseDatabase.getReference();
     @Override
     protected void onStart() {
         super.onStart();
-        childreference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
-               String url=dataSnapshot.child("FileURL").getValue(String.class);
-                    Log.d("Message lautet", url );
-                                        Picasso.get()
-                                        .load(url)
-                                        .into(ImageView);
-                String description =dataSnapshot.child("Description").getValue(String.class);
-                Description.setText(description);
-                String locationstyle=dataSnapshot.child("LocationStyle").getValue(String.class);
-                LocationStyle.setText(locationstyle);
-                String season=dataSnapshot.child("Season").getValue(String.class);
-                Season.setText(season);
-                String timeoftheday=dataSnapshot.child("TimeOfTheDay").getValue(String.class);
-                TimeOfTheDay.setText(timeoftheday);
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+//        for (String s : findPicture.searchResultsID) {
+//            DatabaseReference specchildreference = childreference.child(findPicture.searchResultsID.get(i));
+//            Log.d ("CHILDREFERENCHE LAUTET", String.valueOf(specchildreference));
+//            i = i + 1;
 
-            }
-        });
+        for (int i =0; i<findPicture.searchResultsID.size(); i++){
+            DatabaseReference specchildreference = childreference.child(findPicture.searchResultsID.get(i));
+            Log.d ("CHILDREFERENCHE LAUTET", String.valueOf(specchildreference));
+            specchildreference.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
+                    String url = dataSnapshot.child("FileURL").getValue(String.class);
+                    Log.d("Message lautet", url);
+                    Picasso.get()
+                            .load(url)
+                            .into(ImageView);
+                    String description = dataSnapshot.child("Description").getValue(String.class);
+                    Description.setText(description);
+                    String locationstyle = dataSnapshot.child("LocationStyle").getValue(String.class);
+                    LocationStyle.setText(locationstyle);
+                    String season = dataSnapshot.child("Season").getValue(String.class);
+                    Season.setText(season);
+                    String timeoftheday = dataSnapshot.child("TimeOfTheDay").getValue(String.class);
+                    TimeOfTheDay.setText(timeoftheday);
+                    //Log.d("I LAUTET", i);
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+        }
     }
 }
