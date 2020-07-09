@@ -21,7 +21,7 @@ class findPicture {
     static double loclon;
     static DatabaseReference ref = FirebaseDatabase.getInstance().getReference("uploads");
     final static GeoFire geoFire = new GeoFire(ref);
-    final static GeoQuery geoQuery = geoFire.queryAtLocation(new GeoLocation(50.5841, 8.6784), 5);
+    final static GeoQuery geoQuery = geoFire.queryAtLocation(new GeoLocation(50.5841, 8.6784), 15);
 
     static ArrayList<String> searchResultsID = new ArrayList<String>();
     static ArrayList<String> searchResultsLocation = new ArrayList<String>();
@@ -40,8 +40,11 @@ class findPicture {
                 String location2 = String.valueOf(location);
                 searchResultsLocation.add(location2);
 
-                searchResultsLat.add (Double.parseDouble(location2.substring(12,28)));
-                searchResultsLon.add (Double.parseDouble(location2.substring(31,40)));
+                String [] parts = location2.split(", ");
+                String lat = parts[0].substring(12, 19);
+                searchResultsLat.add (Double.parseDouble(lat));
+                String lon = parts [1].substring(0,7);
+                searchResultsLon.add (Double.parseDouble(lon));
 
 
             }
