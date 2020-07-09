@@ -24,7 +24,7 @@
         <activity android:name=".Detailsactivity" />
         <activity android:name=".MapActivity" />
         <activity android:name=".RegisterActivity" />
-        <activity android:name=".CreateImageActivity" />
+        <activity android:name=".CreateImageActivity" android:windowSoftInputMode="stateHidden"/>
         <activity android:name=".SettingActivity"/>
         <activity android:name=".ImageViewActivity" />
         <activity android:name=".LoginActivity">
