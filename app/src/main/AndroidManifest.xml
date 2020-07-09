@@ -20,8 +20,6 @@
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
 
-        <activity android:name=".findPictureActivity" />
-        <activity android:name=".Detailsactivity" />
         <activity android:name=".MapActivity" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".CreateImageActivity" android:windowSoftInputMode="stateHidden"/>
