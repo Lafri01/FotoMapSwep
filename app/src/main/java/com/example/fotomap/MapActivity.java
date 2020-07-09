@@ -76,6 +76,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
    static ArrayList<LatLng> MarkerarrayList = new ArrayList<LatLng>();
    static ArrayList<LatLng> MarkerOptions = new ArrayList<LatLng>();
    static ArrayList<String > title = new ArrayList<>();
+   private static final LatLng Giessen = new LatLng(50.583298, 8.676937);
 
 
     private GoogleMap mMap;
