@@ -85,6 +85,16 @@
                     android:layout_margin="10dp"
                     android:background="@drawable/upload_rounded_corners_shadow"
                     android:text="Share" />
+                
+                <ProgressBar
+                    android:id="@+id/progressBar"
+                    style="?android:attr/progressBarStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="3dp"
+                    android:visibility="invisible" />
+                
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
