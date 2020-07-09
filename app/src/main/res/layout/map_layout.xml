@@ -7,11 +7,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
+
     <FrameLayout
         android:id="@+id/fragment_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/bottom_navigation">
+
 
         <fragment xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:map="http://schemas.android.com/apk/res-auto"
@@ -29,10 +31,12 @@
             map:uiZoomControls="false"
             map:uiZoomGestures="true" />
 
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
+
 
             <TextView
                 android:id="@+id/verifyMsg"
@@ -55,6 +59,19 @@
                 android:layout_gravity="center"
                 android:text="Verify Now"
                 android:visibility="gone" />
+
+            <ImageButton
+                android:layout_width="38dp"
+                android:layout_height="38dp"
+                android:src="@drawable/ic_baseline_home_24"
+                android:background="@drawable/transparent_rounded_corners_shadow"
+                android:onClick="moveToGiessen"
+                android:layout_marginTop="60dp"
+                android:layout_marginRight="12dp"
+                android:layout_gravity="right"
+                android:alpha="0.8"
+                />
+
         </LinearLayout>
 
         <!--        <TextView-->

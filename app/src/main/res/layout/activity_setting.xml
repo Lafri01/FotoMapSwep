@@ -49,8 +49,11 @@
                             android:id="@+id/button1"
                             android:layout_width="match_parent"
                             android:layout_height="75dp"
+                            android:layout_marginHorizontal="10dp"
                             android:elevation="10dp"
+                            android:layout_marginTop="2dp"
                             android:onClick="switchSchema"
+                            android:background="@drawable/rounded_corners_shadow"
                             android:text="Switch color scheme" />
 
                         <TextView
@@ -66,6 +69,10 @@
                             android:id="@+id/Logout"
                             android:layout_width="match_parent"
                             android:layout_height="75dp"
+                            android:layout_marginHorizontal="10dp"
+                            android:layout_marginBottom="20dp"
+                            android:layout_marginTop="2dp"
+                            android:background="@drawable/rounded_corners_shadow"
                             android:onClick="logout"
                             android:text="Logout" />
                 </LinearLayout>
