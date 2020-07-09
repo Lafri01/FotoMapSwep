@@ -185,6 +185,7 @@ public class CreateImageActivity extends AppCompatActivity {
                             ref.child ("LocationStyle").setValue(locationStylecontent);
                             ref.child ("Season").setValue(seasoncontent);
                             ref.child ("TimeOfTheDay").setValue(timeOfTheDaycontent);
+                            startActivity(new Intent(getApplicationContext(),MapActivity.class));
                         }
                     });
                 }
