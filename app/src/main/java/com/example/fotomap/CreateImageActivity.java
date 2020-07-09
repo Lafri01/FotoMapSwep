@@ -4,10 +4,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
-import androidx.core.view.accessibility.AccessibilityViewCommand;
-
 import android.Manifest;
-import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -23,7 +20,6 @@ import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.Toast;
 import android.widget.ProgressBar;
 import com.firebase.geofire.GeoFire;
@@ -31,14 +27,11 @@ import com.firebase.geofire.GeoLocation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageMetadata;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-
 import java.io.FileDescriptor;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -110,7 +103,6 @@ public class CreateImageActivity extends AppCompatActivity {
         });
     }
 
-
     private void showFileChooser() {
         Intent intent = new Intent();
         intent.setType("image/jpeg");
@@ -130,7 +122,7 @@ public class CreateImageActivity extends AppCompatActivity {
             try {
                 bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), imageUri);
                 imageView.setImageBitmap(bitmap);
-                Log.d("Image Uri lautet", String.valueOf(imageUri)); //Funktioniert
+                //Log.d("Image Uri lautet", String.valueOf(imageUri)); //Funktioniert
                 getGPS(imageUri);
 
             } catch (IOException e) {
@@ -165,7 +157,7 @@ public class CreateImageActivity extends AppCompatActivity {
             downloadURL +=fileName;
             downloadURL +=".jpg?alt=media";
            // Log.d("REFERENCE IST: ", String.valueOf(storageRef)); //Funktioniert
-            Log.d("Referenzvariable ist", String.valueOf(CreateImageActivity.fileRefString));
+           // Log.d("Referenzvariable ist", String.valueOf(CreateImageActivity.fileRefString));
 
             storageRef.putFile(imageUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
                 @Override
@@ -266,8 +258,6 @@ public class CreateImageActivity extends AppCompatActivity {
                     else{
                         longitude = 0 - convertToDegree(attrLONGITUDE);
                     }
-                    Log.d("LAT SUCKT BALLZ UND LAUTT WIE FOLGT", String.valueOf(latitude));
-                    Log.d("LONG SUCKT BALLZ UND LAUTT WIE FOLGT", String.valueOf(longitude));
                 }
             } catch (FileNotFoundException e) {
                 e.printStackTrace();

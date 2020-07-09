@@ -35,8 +35,6 @@ public class LoginActivity extends AppCompatActivity {
     ProgressBar progressBar;
     FirebaseAuth fAuth;
     ImageView micon;
-    TextView mtitleText;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +42,6 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         micon = findViewById(R.id.icon);
-        //mtitleText = findViewById(R.id.titleText);
 
         mfieldEmail = findViewById(R.id.fieldEmail);
         mfieldPassword = findViewById(R.id.fieldPassword);
@@ -53,8 +50,6 @@ public class LoginActivity extends AppCompatActivity {
         mLoginButton = findViewById(R.id.RegisterButton);
         mNewHereText = findViewById(R.id.NewHereText);
         mforgotPassword = findViewById(R.id.forgotPassword);
-
-
 
         mLoginButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,10 +87,8 @@ public class LoginActivity extends AppCompatActivity {
                             Toast.makeText(LoginActivity.this, "Error ! " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                             progressBar.setVisibility(View.GONE);
                         }
-
                     }
                 });
-
             }
         });
 
@@ -144,10 +137,7 @@ public class LoginActivity extends AppCompatActivity {
                 });
 
                 passwordResetDialog.create().show();
-
             }
         });
-
-
     }
 }

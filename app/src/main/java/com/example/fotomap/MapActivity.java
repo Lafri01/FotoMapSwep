@@ -3,28 +3,20 @@ package com.example.fotomap;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
-import com.example.fotomap.Constants;
-
 import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
-import android.database.MatrixCursor;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
-import android.location.Address;
-import android.location.Geocoder;
 import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -37,40 +29,18 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-
-import android.Manifest;
-import android.content.ContentResolver;
-import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.net.Uri;
-import android.os.Bundle;
-import android.provider.MediaStore;
-import android.util.Log;
 import android.view.View;
-import android.webkit.MimeTypeMap;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.Toast;
-
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
-
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 import androidx.annotation.NonNull;
-
 import static com.example.fotomap.Constants.PERMISSION_REQUEST_ACCESS_FINE_LOCATION;
 import static com.example.fotomap.SettingActivity.mapstyle;
 
@@ -89,27 +59,11 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
     private FusedLocationProviderClient mFusedLocationClient;
     private static final LatLng Giessen = new LatLng(50.583298, 8.676937);
 
-    findPicture find = new findPicture();
+    FindPicture find = new FindPicture();
 
   TextView verifyMsg;
     FirebaseAuth fAuth;
-    FirebaseFirestore fStore;
     Button resendCode;
-
-    String userId;
-
-
-    // ArrayList für die Marker
-
-
-    // Anlegen der Markerobjekte enthält double Latitude longitude
-
-
-
-    LatLng sydney = new LatLng (50.57922810 , 8.66658747);
-
-    //arraylist für die namen der marker
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -150,24 +104,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
             });
         }
 
-
-
-
-
-
-
-    // for( int i = 0 ; i < .length ; i++){
-//
-//            for(int j = 0; j < .length; j++) {
-//                MarkerarrayList.add(new MarkerOptions().position(new LatLng(fileLat, fileLng)).title(fileTitle);
-//
-//
-//            }
-//    }
-
-
-
-
     BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
     Menu menu = bottomNav.getMenu();
@@ -181,8 +117,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
                 public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                     switch (item.getItemId()) {
                         case R.id.nav_home:
- /*    Intent intent1 = new Intent(MapActivity.this, MapActivity.class);
-                            startActivity(intent1);*/
                             break;
                         case R.id.nav_newPost:
                             Intent intent2 = new Intent(MapActivity.this, CreateImageActivity.class);
@@ -198,31 +132,20 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
 
             };
 
-    /**
-     * Manipulates the map once available.
-     * This callback is triggered when the map is ready to be used.
-     * This is where we can add markers or lines, add listeners or move the camera. In this case,
-     * we just add a marker near Sydney, Australia.
-     * If Google Play services is not installed on the device, the user will be prompted to install
-     * it inside the SupportMapFragment. This method will only be triggered once the user has
-     * installed Google Play services and returned to the app.
-     */
+
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        Log.d("TITLEARRAY1 IST: ", String.valueOf(findPicture.searchResultsID));
+        //Log.d("TITLEARRAY1 IST: ", String.valueOf(findPicture.searchResultsID));
         // Onclicklistener für die Marker auf der karte
-
-         int markercount = findPicture.searchResultsID.size();
-        Log.d ("MARKTERCOUNT IST", String.valueOf(markercount));
 
         mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
             @Override
             public boolean onMarkerClick(Marker marker) {
                 for(int i=0;i<MarkerarrayList.size();i++) {
                     if (marker.getTitle().equals("Marker in Position" + i)){
-                        ImageViewActivity.kind = String.valueOf(findPicture.searchResultsID.get(i));
+                        ImageViewActivity.kind = String.valueOf(find.searchResultsID.get(i));
 
                         String markertitle = marker.getTitle();
                 Intent in = new Intent(MapActivity.this, ImageViewActivity.class);
@@ -232,17 +155,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
                 }return false;
             }
         });
-//        mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
-//            @Override
-//            public boolean onMarkerClick(Marker marker) {
-//                String markertitle = marker.getTitle();
-//                Intent i = new Intent(MapActivity.this, ImageViewActivity.class);
-//                i.putExtra("title", markertitle);
-//                startActivity(i);
 //
-//                return false;
-//            }
-//        });
 
         if (mapstyle%2==0) {
             try {
@@ -258,17 +171,9 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
             } catch (Resources.NotFoundException e) {
                 Log.e(TAG, "Can't find style. Error: ", e);
             }
-//        requestLocationPermission();
         }
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
             requestLocationPermission();
             return;
         }
@@ -276,7 +181,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         mMap.setMyLocationEnabled(true);
         mMap.setOnMyLocationButtonClickListener(this);
         mMap.setOnMyLocationClickListener(this);
-
 
     }
 
@@ -287,7 +191,6 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
             //If the user has denied the permission previously your code will come to this block
             //Here you can explain why you need this permission
-            //Explain here why you need this permission
         }
         //And finally ask for the permission
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, PERMISSION_REQUEST_ACCESS_FINE_LOCATION);
@@ -316,36 +219,21 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
     public boolean onMyLocationButtonClick() {
         find.findpics();
         getLastKnownLocation();
-        Log.d("TITLEARRAY2 IST: ", String.valueOf(findPicture.searchResultsID));
-
+        //Log.d("TITLEARRAY2 IST: ", String.valueOf(findPicture.searchResultsID));
 
         for(int i=0;i<MarkerarrayList.size();i++) {
             mMap.addMarker(new MarkerOptions().position(MarkerarrayList.get(i)).title("Marker in Position"+i).icon(bitmapDescriptorFromVector(getApplicationContext(),R.drawable.ic_fotomap_marker)));
-           // mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Position"+i));
 
         }
-
-//        for ( int i = 0 ; i < MarkerarrayList.size(); i++){                                                                 // Schleife zum hinzufügen der marker
-//
-//            for ( int j = 0 ; j < findPicture.searchResultsID.size(); j++){                                                                           // Schleife zum setzen der Namen
-//
-//                mMap.addMarker(new MarkerOptions().position(MarkerarrayList.get(i)).title(String.valueOf(findPicture.searchResultsID.get(i))));                                              //position nimmt ein LatLng Objekt an, title String , get() ist von Arraylist dem wird ein index (int) übergeben
-//            }
-//                                                                                              // bewegt kamera zu diesem objekt mit moveCamera , newLatLng bewegt den screen so dass der punkt im center ist
-//        }
-        //mMap.moveCamera(CameraUpdateFactory.newLatLng(MarkerarrayList.get(0)));
-
-
         return false;
     }
 
     @Override
     public void onMyLocationClick(@NonNull Location location) {
-
     }
 
     private void getLastKnownLocation() {
-        Log.d(TAG, "getLastKnownLocation: called.");
+        //Log.d(TAG, "getLastKnownLocation: called.");
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
@@ -356,22 +244,19 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
                 if (task.isSuccessful()) {
                     Location location = task.getResult();
                     if (location != null){
-                        findPicture.loclat = location.getLatitude();
-                        findPicture.loclon = location.getLongitude();
-                        Log.d ("userlat: ", String.valueOf(findPicture.loclat));
-                        Log.d("Userlon: ", String.valueOf(findPicture.loclon));
+                        find.loclat = location.getLatitude();
+                        find.loclon = location.getLongitude();
+                        //Log.d ("userlat: ", String.valueOf(findPicture.loclat));
+                        //Log.d("Userlon: ", String.valueOf(findPicture.loclon));
                     }
 
                 }
             }
         });
-      //  findPicture.findpics();
-
     }
     
     public void moveToGiessen(View view){
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(Giessen, 13));
-
     }
 
     private BitmapDescriptor bitmapDescriptorFromVector(Context context, int vectorResId){
