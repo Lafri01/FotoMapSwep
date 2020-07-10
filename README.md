@@ -8,4 +8,4 @@ und so Anregungen finden können, wo die besten Spots für die nächste Fotosess
 Momentan wird nur das Teilen von .jpg Bildern unterstüzt, vorausgesetzt sie haben einen GPS Standort in den Metadaten.
 
 An Herrn Lucke:
-Im Ordner "Testbilder" finden Sie 2 Bilddateien, welche in Gießen aufgenommen wurden, damit Sie die Funktion des Bilder postens ausprobieren können :)
+Im Root Ordner des Gits finden Sie 2 Bilddateien(IMG...png), welche in Gießen aufgenommen wurden, damit Sie die Funktion des Bilder postens ausprobieren können :)
