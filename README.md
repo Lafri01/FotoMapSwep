@@ -6,3 +6,6 @@ Sie ist vielseitig einsetzbar, ursprünglich war sie für Hobbyfotografen gedach
 und so Anregungen finden können, wo die besten Spots für die nächste Fotosession sind.
 
 Momentan wird nur das Teilen von .jpg Bildern unterstüzt, vorausgesetzt sie haben einen GPS Standort in den Metadaten.
+
+An Herrn Lucke:
+Im Ordner "Testbilder" finden Sie 2 Bilddateien, welche in Gießen aufgenommen wurden, damit Sie die Funktion des Bilder postens ausprobieren können :)
