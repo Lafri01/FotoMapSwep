@@ -222,7 +222,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
         //Log.d("TITLEARRAY2 IST: ", String.valueOf(findPicture.searchResultsID));
 
         for(int i=0;i<MarkerarrayList.size();i++) {
-            mMap.addMarker(new MarkerOptions().position(MarkerarrayList.get(i)).title("Marker in Position"+i).icon(bitmapDescriptorFromVector(getApplicationContext(),R.drawable.ic_fotomap_marker)));
+            mMap.addMarker(new MarkerOptions().position(MarkerarrayList.get(i)).title("Bildpost Nummer "+i).icon(bitmapDescriptorFromVector(getApplicationContext(),R.drawable.ic_fotomap_marker)));
 
         }
         return false;
