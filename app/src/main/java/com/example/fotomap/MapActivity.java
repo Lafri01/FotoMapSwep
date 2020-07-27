@@ -144,7 +144,7 @@ public class MapActivity extends FragmentActivity implements OnMapReadyCallback,
             @Override
             public boolean onMarkerClick(Marker marker) {
                 for(int i=0;i<MarkerarrayList.size();i++) {
-                    if (marker.getTitle().equals("Marker in Position" + i)){
+                    if (marker.getTitle().equals("Bildpost Nummer "+i)){
                         ImageViewActivity.kind = String.valueOf(find.searchResultsID.get(i));
 
                         String markertitle = marker.getTitle();
